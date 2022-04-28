@@ -518,7 +518,7 @@ end
 module StreetViewPanorama: sig
   type t
   val new_street_view_panorama:
-    container:Converter.Element.t ->
+    container:Woosmap_converter.Element.t ->
     ?opts:StreetViewPanoramaOptions.t ->
     unit ->
     t [@@js.new]
@@ -727,7 +727,7 @@ module MapType: sig
     t ->
     tile_coord:Point.t ->
     zoom:int ->
-    Converter.Element.t ->
+    Woosmap_converter.Element.t ->
     unit [@@js.call]
   (** Node **)
   val release_tile: t -> Ojs.t -> unit [@@js.call]
@@ -852,7 +852,7 @@ end
 module Map: sig
   type t
   val new_map :
-    Converter.Element.t ->
+    Woosmap_converter.Element.t ->
     ?opts:MapOptions.t -> unit -> t [@@js.new]
 
   val add_listener : t -> string -> (unit -> unit) -> MapsEventListener.t
@@ -875,7 +875,7 @@ module Map: sig
   val set_map_type_id : t -> map_types -> unit [@@js.call]
   val set_map_type_id_string : t -> string -> unit [@@js.call "setMapTypeId"]
   val get_map_type_id : t -> map_types [@@js.call]
-  val get_div : t -> Converter.Element.t [@@js.call]
+  val get_div : t -> Woosmap_converter.Element.t [@@js.call]
   val get_heading : t -> float [@@js.call]
   val get_projection : t -> Projection.t [@@js.call]
   val get_tilt : t -> float [@@js.call]
@@ -1680,17 +1680,17 @@ module Time: sig
   val create:
     ?text:string ->
     ?time_zone:string ->
-    ?value:Converter.Date.t->
+    ?value:Woosmap_converter.Date.t->
     unit ->
     t
     [@@js.verbatim_names]
     [@@js.builder]
   val text: t -> string  [@@js.verbatim_names]
   val time_zone: t -> string  [@@js.verbatim_names]
-  val value: t -> Converter.Date.t [@@js.verbatim_names]
+  val value: t -> Woosmap_converter.Date.t [@@js.verbatim_names]
   val set_text: t -> string -> unit [@@js.verbatim_names]
   val set_time_zone: t -> string -> unit [@@js.verbatim_names]
-  val set_value: t -> Converter.Date.t-> unit [@@js.verbatim_names]
+  val set_value: t -> Woosmap_converter.Date.t-> unit [@@js.verbatim_names]
 end
 
 module Duration: sig
@@ -2080,19 +2080,19 @@ end
 module TransitOptions: sig
   type t
   val create:
-    ?arrival_time:Converter.Date.t ->
-    ?departure_time:Converter.Date.t ->
+    ?arrival_time:Woosmap_converter.Date.t ->
+    ?departure_time:Woosmap_converter.Date.t ->
     ?modes:transit_mode list ->
     ?routing_preference:transit_route_preference ->
     unit ->
     t
     [@@js.builder]
-  val arrival_time: t -> Converter.Date.t
-  val departure_time: t -> Converter.Date.t
+  val arrival_time: t -> Woosmap_converter.Date.t
+  val departure_time: t -> Woosmap_converter.Date.t
   val modes: t -> transit_mode list
   val routing_preference: t -> transit_route_preference
-  val set_arrival_time: t -> Converter.Date.t -> unit
-  val set_departure_time: t -> Converter.Date.t -> unit
+  val set_arrival_time: t -> Woosmap_converter.Date.t -> unit
+  val set_departure_time: t -> Woosmap_converter.Date.t -> unit
   val set_modes: t -> transit_mode list -> unit
   val set_routing_preference: t -> transit_route_preference -> unit
 end
@@ -2102,7 +2102,7 @@ end
 module DrivingOptions: sig
   type t
   val create:
-    ?departure_time:Converter.Date.t ->
+    ?departure_time:Woosmap_converter.Date.t ->
     ?traffic_model:traffic_model ->
     unit ->
     t
@@ -2707,7 +2707,7 @@ module Autocomplete: sig
   type t
   val new_autocomplete :
     ?opts:AutocompleteOptions.t ->
-    Converter.Element.t ->
+    Woosmap_converter.Element.t ->
     t [@@js.new]
   val get_bounds : t -> unit -> LatLngBounds.t [@@js.call]
   val get_place : t -> unit -> PlaceResult.t [@@js.call]
@@ -3335,7 +3335,7 @@ end
 module SearchBox: sig
   type t
   val new_search_box:
-    Converter.Element.t -> ?opts:SearchBoxOptions.t -> unit -> t [@@js.new]
+    Woosmap_converter.Element.t -> ?opts:SearchBoxOptions.t -> unit -> t [@@js.new]
   val get_bounds: t -> LatLngBounds.t [@@js.call]
   val get_places: t -> PlaceResult.t list [@@js.call]
   val set_bounds: t -> LatLngBounds.t -> unit [@@js.call]
@@ -3492,9 +3492,9 @@ module ImageMapType: sig
   val new_image_map_type:
     opts:ImageMapTypeOptions.t -> t [@@js.new]
   val get_opacity: t -> float [@@js.call]
-  (* Should take Document, not Converter.Element.t *)
-  val get_tile: t -> Point.t -> int -> Converter.Element.t -> unit [@@js.call]
-  (* Takes Node (Converter.Element.t ?) *)
+  (* Should take Document, not Woosmap_converter.Element.t *)
+  val get_tile: t -> Point.t -> int -> Woosmap_converter.Element.t -> unit [@@js.call]
+  (* Takes Node (Woosmap_converter.Element.t ?) *)
   val release_tile: t -> Ojs.t -> unit [@@js.call]
   val set_opacity: t -> float -> t [@@js.call]
   (*** Attributes ***)
@@ -3520,24 +3520,24 @@ module MapPanes: sig
   type t
   (** Only Element **)
   val create:
-    ?float_pane:Converter.Element.t ->
-    ?map_pane:Converter.Element.t ->
-    ?marker_layer:Converter.Element.t ->
-    ?overlay_layer:Converter.Element.t ->
-    ?overlay_mouse_target:Converter.Element.t ->
+    ?float_pane:Woosmap_converter.Element.t ->
+    ?map_pane:Woosmap_converter.Element.t ->
+    ?marker_layer:Woosmap_converter.Element.t ->
+    ?overlay_layer:Woosmap_converter.Element.t ->
+    ?overlay_mouse_target:Woosmap_converter.Element.t ->
     unit ->
     t
     [@@js.builder]
-  val float_pane: t -> Converter.Element.t [@@js.get]
-  val map_pane: t -> Converter.Element.t [@@js.get]
-  val marker_layer: t -> Converter.Element.t [@@js.get]
-  val overlay_layer: t -> Converter.Element.t [@@js.get]
-  val overlay_mouse_target: t -> Converter.Element.t [@@js.get]
-  val set_float_pane: t -> Converter.Element.t -> unit [@@js.set]
-  val set_map_pane: t -> Converter.Element.t -> unit [@@js.set]
-  val set_marker_layer: t -> Converter.Element.t -> unit [@@js.set]
-  val set_overlay_layer: t -> Converter.Element.t -> unit [@@js.set]
-  val set_overlay_mouse_target: t -> Converter.Element.t -> unit [@@js.set]
+  val float_pane: t -> Woosmap_converter.Element.t [@@js.get]
+  val map_pane: t -> Woosmap_converter.Element.t [@@js.get]
+  val marker_layer: t -> Woosmap_converter.Element.t [@@js.get]
+  val overlay_layer: t -> Woosmap_converter.Element.t [@@js.get]
+  val overlay_mouse_target: t -> Woosmap_converter.Element.t [@@js.get]
+  val set_float_pane: t -> Woosmap_converter.Element.t -> unit [@@js.set]
+  val set_map_pane: t -> Woosmap_converter.Element.t -> unit [@@js.set]
+  val set_marker_layer: t -> Woosmap_converter.Element.t -> unit [@@js.set]
+  val set_overlay_layer: t -> Woosmap_converter.Element.t -> unit [@@js.set]
+  val set_overlay_mouse_target: t -> Woosmap_converter.Element.t -> unit [@@js.set]
 end
 
 module StyledMapTypeOptions: sig
